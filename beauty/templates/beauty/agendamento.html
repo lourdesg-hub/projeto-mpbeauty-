@@ -1,0 +1,38 @@
+{% extends 'beauty/base.html' %}
+
+{% block titulo %}
+    Agendamento | mpbeauty
+{% endblock %}
+
+{% block conteudo %}
+
+<section class="formulario-secao">
+
+    <h1>
+        Agendar atendimento
+    </h1>
+
+    <p>
+        Agende seu atendimento com
+        {{ profissional.nome }}.
+    </p>
+
+
+    <form method="post">
+
+        {% csrf_token %}
+
+        {{ formulario.as_p }}
+
+        <button
+            type="submit"
+            class="botao"
+        >
+            Solicitar agendamento
+        </button>
+
+    </form>
+
+</section>
+
+{% endblock %}

@@ -1,0 +1,76 @@
+{% extends 'beauty/base.html' %}
+
+{% block title %}
+    Profissionais | mpbeauty
+{% endblock %}
+
+{% block content %}
+
+<section class="section">
+
+    <h1>
+        Profissionais
+    </h1>
+
+    <p>
+        Encontre profissionais de beleza
+        para cuidar de você.
+    </p>
+
+
+    <div class="cards">
+
+        {% for profissional in profissionais %}
+
+        <article class="card">
+
+            {% if profissional.image %}
+
+            <img
+                src="{{ profissional.image }}"
+                alt="{{ profissional.name }}"
+            >
+
+            {% endif %}
+
+            <h2>
+                {{ profissional.name }}
+            </h2>
+
+            <p>
+                {{ profissional.profession }}
+            </p>
+
+            <p>
+                {{ profissional.city }}
+                -
+                {{ profissional.neighborhood }}
+            </p>
+
+            <p>
+                A partir de
+                R$ {{ profissional.starting_price }}
+            </p>
+
+            <a
+                href="{% url 'profissional_detalhes' profissional.id %}"
+                class="button"
+            >
+                Ver perfil
+            </a>
+
+        </article>
+
+        {% empty %}
+
+        <p>
+            Nenhuma profissional cadastrada.
+        </p>
+
+        {% endfor %}
+
+    </div>
+
+</section>
+
+{% endblock %}

@@ -1,0 +1,88 @@
+{% extends 'beauty/base.html' %}
+
+{% block title %}
+    Produtos | mpbeauty
+{% endblock %}
+
+{% block content %}
+
+<section class="section">
+
+    <h1>
+        Produtos
+    </h1>
+
+    <div class="filters">
+
+        <a href="{% url 'produtos' %}">
+            Todos
+        </a>
+
+        <a href="{% url 'produtos' %}?category=maquiagem">
+            Maquiagem
+        </a>
+
+        <a href="{% url 'produtos' %}?category=skincare">
+            Skin Care
+        </a>
+
+        <a href="{% url 'produtos' %}?category=cabelo">
+            Cabelo
+        </a>
+
+    </div>
+
+
+    <div class="cards">
+
+        {% for produto in produtos %}
+
+        <article class="card">
+
+            {% if produto.image %}
+
+            <img
+                src="{{ produto.image }}"
+                alt="{{ produto.name }}"
+            >
+
+            {% endif %}
+
+            <span>
+                {{ produto.get_category_display }}
+            </span>
+
+            <h2>
+                {{ produto.name }}
+            </h2>
+
+            <p>
+                {{ produto.description }}
+            </p>
+
+            <strong>
+                R$ {{ produto.price }}
+            </strong>
+
+            <a
+                href="{% url 'produtos_detalhes' produto.id %}"
+                class="button"
+            >
+                Ver detalhes
+            </a>
+
+        </article>
+
+        {% empty %}
+
+        <p>
+            Nenhum produto encontrado.
+        </p>
+
+        {% endfor %}
+
+    </div>
+
+</section>
+
+{% endblock %}

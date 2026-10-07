@@ -1,0 +1,117 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        {% block title %}
+            mpbeauty
+        {% endblock %}
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="{% static 'beauty/css/style.css' %}"
+    >
+
+</head>
+
+<body>
+
+<header class="header">
+
+    <a href="{% url 'home' %}" class="logo">
+        mpbeauty
+    </a>
+
+    <nav>
+
+        <a href="{% url 'products' %}">
+            Beleza
+        </a>
+
+        <a href="{% url 'products' %}?category=cabelo">
+            Cabelo
+        </a>
+
+        <a href="{% url 'professionals' %}">
+            Profissionais
+        </a>
+
+        <a href="{% url 'packages' %}">
+            Pacotes
+        </a>
+
+        {% if user.is_authenticated %}
+
+            <span>
+                Olá, {{ user.username }}
+            </span>
+
+        {% else %}
+
+            <a href="/admin/login/">
+                Entrar
+            </a>
+
+        {% endif %}
+
+    </nav>
+
+</header>
+
+
+{% if messages %}
+
+    <div class="messages">
+
+        {% for message in messages %}
+
+            <div class="message">
+                {{ message }}
+            </div>
+
+        {% endfor %}
+
+    </div>
+
+{% endif %}
+
+
+<main>
+
+    {% block content %}
+
+    {% endblock %}
+
+</main>
+
+
+<footer>
+
+    <p>
+        © 2026 mpbeauty
+    </p>
+
+    <p>
+        Beleza, cuidado e autoestima.
+    </p>
+
+</footer>
+
+<script
+    src="{% static 'beauty/js/main.js' %}"
+></script>
+
+</body>
+
+</html>

@@ -1,0 +1,68 @@
+{% extends 'beauty/base.html' %}
+
+{% block titulo %}
+    Pacotes | mpbeauty
+{% endblock %}
+
+{% block conteudo %}
+
+<section class="secao">
+
+    <h1>
+        Pacotes & Combos
+    </h1>
+
+    <p>
+        Experiências especiais para
+        cada momento.
+    </p>
+
+
+    <div class="cartoes">
+
+        {% for pacote in pacotes %}
+
+            <article class="cartao">
+
+                {% if pacote.tipo_pacote == 'noiva' %}
+
+                    <span>
+                        ✨ ESPECIAL PARA NOIVAS
+                    </span>
+
+                {% else %}
+
+                    <span>
+                        💕 PARA VOCÊ
+                    </span>
+
+                {% endif %}
+
+
+                <h2>
+                    {{ pacote.nome }}
+                </h2>
+
+                <p>
+                    {{ pacote.descricao }}
+                </p>
+
+                <strong>
+                    R$ {{ pacote.preco }}
+                </strong>
+
+            </article>
+
+        {% empty %}
+
+            <p>
+                Nenhum pacote cadastrado.
+            </p>
+
+        {% endfor %}
+
+    </div>
+
+</section>
+
+{% endblock %}

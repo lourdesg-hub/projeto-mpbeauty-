@@ -1,0 +1,99 @@
+{% extends 'beauty/base.html' %}
+
+{% block title %}
+    {{ professional.name }} | mpbeauty
+{% endblock %}
+
+{% block content %}
+
+<section class="detail">
+
+    <div>
+
+        {% if profissional.image %}
+
+        <img
+            src="{{ profissional.image }}"
+            alt="{{ profissional.name }}"
+            class="detail-image"
+        >
+
+        {% endif %}
+
+    </div>
+
+
+    <div>
+
+        <h1>
+            {{ profissional.name }}
+        </h1>
+
+        <h3>
+            {{ profissional.profession }}
+        </h3>
+
+        <p>
+            {{ profissional.bio }}
+        </p>
+
+        <p>
+            {{ profissional.experience_years }}
+            anos de experiência.
+        </p>
+
+        <p>
+            {{ profissional.city }}
+            -
+            {{ profissional.neighborhood }}
+        </p>
+
+
+        <h2>
+            Serviços
+        </h2>
+
+        {% for service in profissional.services.all %}
+
+        <div class="service">
+
+            <h3>
+                {{ service.name }}
+            </h3>
+
+            <p>
+                {{ service.description }}
+            </p>
+
+            <strong>
+                R$ {{ service.price }}
+            </strong>
+
+            <p>
+                {{ service.duration }}
+                minutos
+            </p>
+
+        </div>
+
+        {% empty %}
+
+        <p>
+            Nenhum serviço cadastrado.
+        </p>
+
+        {% endfor %}
+
+
+        <a
+            href="{% url 'appointment' profissional.id %}"
+            class="button"
+        >
+            Agendar atendimento
+        </a>
+
+    </div>
+
+</section>
+
+{% endblock %}
