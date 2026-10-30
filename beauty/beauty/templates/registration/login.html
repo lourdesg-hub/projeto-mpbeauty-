@@ -1,0 +1,35 @@
+
+{% extends 'beauty/base.html' %}
+
+{% block title %}Entrar | MPBeauty{% endblock %}
+
+{% block content %}
+
+<section class="section form-section">
+
+    <h1>Entrar na sua conta</h1>
+
+    <form method="post">
+
+        {% csrf_token %}
+
+        {{ form.as_p }}
+
+        <input type="hidden" name="next" value="{{ next }}">
+
+        <button type="submit">
+            Entrar
+        </button>
+
+    </form>
+
+    <p>
+        Ainda não tem conta?
+        <a href="{% url 'cadastro' %}">
+            Cadastre-se
+        </a>
+    </p>
+
+</section>
+
+{% endblock %}

@@ -97,7 +97,7 @@ class Migration(migrations.Migration):
             name='Appointment',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('location', models.CharField(choices=[('studio', 'No estabelecimento'), ('home', 'Atendimento a domicílio')], max_length=10)),
+                ('location', models.CharField(choices=[('studio', 'No estabelecimento'), ('inicio', 'Atendimento a domicílio')], max_length=10)),
                 ('date', models.DateField()),
                 ('time', models.TimeField()),
                 ('client_name', models.CharField(max_length=100)),
