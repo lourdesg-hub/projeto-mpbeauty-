@@ -1,37 +1,41 @@
+
 {% extends 'beauty/base.html' %}
 
 {% block title %}
-    Produtos | mpbeauty
+    Produtos | MPBeauty
 {% endblock %}
 
 {% block content %}
 
+<section class="page-banner">
+    <h1>Nossos Produtos</h1>
+    <p>Encontre os produtos ideais para realçar sua beleza e cuidar de você.</p>
+</section>
+
 <section class="section">
 
-    <h1>
-        Produtos
-    </h1>
+    <div class="section-title">
+        <h2>Explore nossa coleção</h2>
+        <p>Escolha uma categoria e encontre seus favoritos.</p>
+    </div>
 
     <div class="filters">
-
-        <a href="{% url 'produtos' %}">
+        <a href="{% url 'produtos' %}" class="filter-link">
             Todos
         </a>
 
-        <a href="{% url 'produtos' %}?category=maquiagem">
+        <a href="{% url 'produtos' %}?category=maquiagem" class="filter-link">
             Maquiagem
         </a>
 
-        <a href="{% url 'produtos' %}?category=skincare">
+        <a href="{% url 'produtos' %}?category=skincare" class="filter-link">
             Skin Care
         </a>
 
-        <a href="{% url 'produtos' %}?category=cabelo">
+        <a href="{% url 'produtos' %}?category=cabelo" class="filter-link">
             Cabelo
         </a>
-
     </div>
-
 
     <div class="cards">
 
@@ -40,44 +44,46 @@
         <article class="card">
 
             {% if produto.image %}
-
-            <img
-                src="{{ produto.image }}"
-                alt="{{ produto.name }}"
-            >
-
+                <img
+                    src="{{ produto.image }}"
+                    alt="{{ produto.name }}"
+                >
+            {% else %}
+                <div class="product-no-image">
+                    <span>MPBeauty</span>
+                </div>
             {% endif %}
 
-            <span>
-                {{ produto.get_category_display }}
-            </span>
+            <div class="card-content">
 
-            <h2>
-                {{ produto.name }}
-            </h2>
+                <span class="product-category">
+                    {{ produto.get_category_display }}
+                </span>
 
-            <p>
-                {{ produto.description }}
-            </p>
+                <h3>{{ produto.name }}</h3>
 
-            <strong>
-                R$ {{ produto.price }}
-            </strong>
+                <p>{{ produto.description|truncatewords:18 }}</p>
 
-            <a
-                href="{% url 'produtos_detalhes' produto.id %}"
-                class="button"
-            >
-                Ver detalhes
-            </a>
+                <strong class="product-price">
+                    R$ {{ produto.price }}
+                </strong>
+
+                <a
+                    href="{% url 'produtos_detalhes' produto.id %}"
+                    class="button"
+                >
+                    Ver detalhes
+                </a>
+
+            </div>
 
         </article>
 
         {% empty %}
 
-        <p>
-            Nenhum produto encontrado.
-        </p>
+            <p class="empty-message">
+                Nenhum produto encontrado nesta categoria.
+            </p>
 
         {% endfor %}
 

@@ -1,22 +1,19 @@
+```django
 {% extends 'beauty/base.html' %}
 
-{% block titulo %}
-    Pacotes | mpbeauty
+{% block title %}
+    Pacotes | MPBeauty
 {% endblock %}
 
-{% block conteudo %}
+{% block content %}
 
 <section class="secao">
 
-    <h1>
-        Pacotes & Combos
-    </h1>
+    <h1>Pacotes & Combos</h1>
 
     <p>
-        Experiências especiais para
-        cada momento.
+        Experiências especiais para cada momento.
     </p>
-
 
     <div class="cartoes">
 
@@ -24,7 +21,7 @@
 
             <article class="cartao">
 
-                {% if pacote.tipo_pacote == 'noiva' %}
+                {% if pacote.package_type == 'bride' %}
 
                     <span>
                         ✨ ESPECIAL PARA NOIVAS
@@ -38,26 +35,19 @@
 
                 {% endif %}
 
+                <h2>{{ pacote.name }}</h2>
 
-                <h2>
-                    {{ pacote.nome }}
-                </h2>
-
-                <p>
-                    {{ pacote.descricao }}
-                </p>
+                <p>{{ pacote.description }}</p>
 
                 <strong>
-                    R$ {{ pacote.preco }}
+                    R$ {{ pacote.price }}
                 </strong>
 
             </article>
 
         {% empty %}
 
-            <p>
-                Nenhum pacote cadastrado.
-            </p>
+            <p>Nenhum pacote cadastrado no momento.</p>
 
         {% endfor %}
 
@@ -66,3 +56,4 @@
 </section>
 
 {% endblock %}
+```

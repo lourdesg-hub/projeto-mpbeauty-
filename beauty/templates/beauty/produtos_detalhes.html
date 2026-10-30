@@ -1,85 +1,106 @@
+
 {% extends 'beauty/base.html' %}
 
 {% block title %}
-    Produtos | mpbeauty
+    {{ produto.name }} | MPBeauty
 {% endblock %}
 
 {% block content %}
 
-<section class="section">
+<section class="product-detail-section">
 
-    <h1>
-        Produtos
-    </h1>
+    <a href="{% url 'produtos' %}" class="back-link">
+        ← Voltar para produtos
+    </a>
 
-    <div class="filters">
+    <div class="product-detail-card">
 
-        <a href="{% url 'produtos' %}">
-            Todos
-        </a>
-
-        <a href="{% url 'produtos' %}?category=maquiagem">
-            Maquiagem
-        </a>
-
-        <a href="{% url 'produtos' %}?category=skincare">
-            Skin Care
-        </a>
-
-        <a href="{% url 'produtos' %}?category=cabelo">
-            Cabelo
-        </a>
-
-    </div>
-
-
-    <div class="cards">
-
-        {% for produto in produtos %}
-
-        <article class="card">
-
+        <div class="product-detail-image">
             {% if produto.image %}
-
-            <img
-                src="{{ produto.image }}"
-                alt="{{ produto.name }}"
-            >
-
+                <img src="{{ produto.image }}" alt="{{ produto.name }}">
+            {% else %}
+                <div class="product-no-image">
+                    MPBeauty
+                </div>
             {% endif %}
+        </div>
 
-            <span>
+        <div class="product-detail-info">
+
+            <span class="product-category">
                 {{ produto.get_category_display }}
             </span>
 
-            <h2>
-                {{ produto.name }}
-            </h2>
+            <h1>{{ produto.name }}</h1>
 
-            <p>
-                {{ produto.description }}
-            </p>
+            <p>{{ produto.description }}</p>
 
-            <strong>
+            <strong class="product-price">
                 R$ {{ produto.price }}
             </strong>
 
-            <a
-                href="{% url 'produtos_detalhes' produto.id %}"
-                class="button"
-            >
-                Ver detalhes
-            </a>
+            <p>
+                {% if produto.stock > 0 %}
+                    Disponível em estoque: {{ produto.stock }}
+                {% else %}
+                    Produto indisponível no momento.
+                {% endif %}
+            </p>
 
+        </div>
+
+    </div>
+
+</section>
+
+<section class="reviews-section">
+
+    <h2>Avaliações dos clientes</h2>
+
+    {% for avaliacao in avaliacoes %}
+
+        <article class="review-card">
+            <h3>{{ avaliacao.user.username }}</h3>
+
+            <p>Nota: {{ avaliacao.rating }}/5</p>
+
+            <p>{{ avaliacao.comment }}</p>
+
+            <small>{{ avaliacao.created_at|date:"d/m/Y" }}</small>
         </article>
 
-        {% empty %}
+    {% empty %}
 
-        <p>
-            Nenhum produto encontrado.
-        </p>
+        <p>Este produto ainda não possui avaliações.</p>
 
-        {% endfor %}
+    {% endfor %}
+
+    <div class="form-panel">
+
+        <h2>Deixe sua avaliação</h2>
+
+        {% if user.is_authenticated %}
+
+            <form method="POST" class="beauty-form">
+                {% csrf_token %}
+
+                {{ formulario.as_p }}
+
+                <button type="submit" class="button">
+                    Enviar avaliação
+                </button>
+            </form>
+
+            <p>Somente clientes que compraram o produto podem avaliá-lo.</p>
+
+        {% else %}
+
+            <p>
+                Faça login para avaliar este produto.
+                <a href="{% url 'login' %}">Entrar</a>
+            </p>
+
+        {% endif %}
 
     </div>
 

@@ -1,22 +1,23 @@
+
 {% extends 'beauty/base.html' %}
 
 {% block title %}
-    Profissionais | mpbeauty
+    Profissionais | MPBeauty
 {% endblock %}
 
 {% block content %}
 
+<section class="page-banner">
+    <h1>Nossas Profissionais</h1>
+    <p>Conheça especialistas que vão cuidar da sua beleza e autoestima.</p>
+</section>
+
 <section class="section">
 
-    <h1>
-        Profissionais
-    </h1>
-
-    <p>
-        Encontre profissionais de beleza
-        para cuidar de você.
-    </p>
-
+    <div class="section-title">
+        <h2>Encontre sua profissional</h2>
+        <p>Conheça nossos talentos e escolha quem combina com você.</p>
+    </div>
 
     <div class="cards">
 
@@ -25,47 +26,54 @@
         <article class="card">
 
             {% if profissional.image %}
-
-            <img
-                src="{{ profissional.image }}"
-                alt="{{ profissional.name }}"
-            >
-
+                <img
+                    src="{{ profissional.image }}"
+                    alt="{{ profissional.name }}"
+                >
+            {% else %}
+                <div class="professional-no-image">
+                    MPBeauty
+                </div>
             {% endif %}
 
-            <h2>
-                {{ profissional.name }}
-            </h2>
+            <div class="card-content">
 
-            <p>
-                {{ profissional.profession }}
-            </p>
+                <h3>{{ profissional.name }}</h3>
 
-            <p>
-                {{ profissional.city }}
-                -
-                {{ profissional.neighborhood }}
-            </p>
+                <span class="professional-category">
+                    {{ profissional.profession }}
+                </span>
 
-            <p>
-                A partir de
-                R$ {{ profissional.starting_price }}
-            </p>
+                <p>
+                    <strong>Localização:</strong><br>
+                    {{ profissional.city }} - {{ profissional.neighborhood }}
+                </p>
 
-            <a
-                href="{% url 'profissional_detalhes' profissional.id %}"
-                class="button"
-            >
-                Ver perfil
-            </a>
+                <p>
+                    <strong>Experiência:</strong>
+                    {{ profissional.experience_years }} anos
+                </p>
+
+                <strong class="product-price">
+                    A partir de R$ {{ profissional.starting_price }}
+                </strong>
+
+                <a
+                    href="{% url 'profissionais_detalhes' profissional.id %}"
+                    class="button"
+                >
+                    Ver perfil
+                </a>
+
+            </div>
 
         </article>
 
         {% empty %}
 
-        <p>
-            Nenhuma profissional cadastrada.
-        </p>
+            <p class="empty-message">
+                Nenhuma profissional cadastrada no momento.
+            </p>
 
         {% endfor %}
 

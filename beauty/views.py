@@ -61,26 +61,32 @@ def produtos_detalhes(request, produto_id):
 
     formulario = FormularioAvaliacaoProduto()
 
+    ja_comprou = False
+    ja_avaliou = False
+
+    if request.user.is_authenticated:
+        ja_comprou = PurchaseItem.objects.filter(
+            purchase__user=request.user,
+            product=produto
+        ).exists()
+
+        ja_avaliou = ProductReview.objects.filter(
+            product=produto,
+            user=request.user
+        ).exists()
+
     if request.method == "POST":
 
         if not request.user.is_authenticated:
             return redirect("login")
 
-        comprou = PurchaseItem.objects.filter(
-            purchase__user=request.user,
-            product=produto
-        ).exists()
-
-        if not comprou:
+        if not ja_comprou:
             messages.error(
                 request,
                 "Você precisa comprar o produto para avaliá-lo."
             )
 
-        elif ProductReview.objects.filter(
-            product=produto,
-            user=request.user
-        ).exists():
+        elif ja_avaliou:
             messages.warning(
                 request,
                 "Você já avaliou este produto."
@@ -109,6 +115,8 @@ def produtos_detalhes(request, produto_id):
         "produto": produto,
         "avaliacoes": produto.reviews.all(),
         "formulario": formulario,
+        "ja_comprou": ja_comprou,
+        "ja_avaliou": ja_avaliou,
     })
 
 

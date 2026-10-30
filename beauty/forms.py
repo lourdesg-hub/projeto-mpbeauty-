@@ -1,5 +1,6 @@
 
 from django import forms
+
 from .models import (
     Appointment,
     ProductReview,
@@ -23,10 +24,12 @@ class FormularioAvaliacaoProduto(forms.ModelForm):
                 "min": 0,
                 "max": 5,
                 "step": 1,
+                "class": "campo",
             }),
             "comment": forms.Textarea(attrs={
                 "rows": 4,
                 "placeholder": "Conte o que achou do produto...",
+                "class": "campo",
             }),
         }
 
@@ -47,10 +50,12 @@ class FormularioAvaliacaoProfissional(forms.ModelForm):
                 "min": 0,
                 "max": 5,
                 "step": 1,
+                "class": "campo",
             }),
             "comment": forms.Textarea(attrs={
                 "rows": 4,
                 "placeholder": "Conte como foi seu atendimento...",
+                "class": "campo",
             }),
         }
 
@@ -79,16 +84,26 @@ class FormularioAgendamento(forms.ModelForm):
         }
 
         widgets = {
+            "service": forms.Select(attrs={
+                "class": "campo",
+            }),
+            "location": forms.Select(attrs={
+                "class": "campo",
+            }),
             "date": forms.DateInput(attrs={
                 "type": "date",
+                "class": "campo",
             }),
             "time": forms.TimeInput(attrs={
                 "type": "time",
+                "class": "campo",
             }),
             "client_name": forms.TextInput(attrs={
                 "placeholder": "Digite seu nome completo",
+                "class": "campo",
             }),
             "whatsapp": forms.TextInput(attrs={
                 "placeholder": "(84) 99999-9999",
+                "class": "campo",
             }),
         }

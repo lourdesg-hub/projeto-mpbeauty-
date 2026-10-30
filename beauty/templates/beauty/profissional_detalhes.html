@@ -1,96 +1,167 @@
 {% extends 'beauty/base.html' %}
 
 {% block title %}
-    {{ professional.name }} | mpbeauty
+    {{ profissional.name }} | MPBeauty
 {% endblock %}
 
 {% block content %}
 
-<section class="detail">
+<section class="professional-detail-section">
 
-    <div>
+    <a href="{% url 'profissionais' %}" class="back-link">
+        ← Voltar para profissionais
+    </a>
 
-        {% if profissional.image %}
+    <div class="professional-detail-card">
 
-        <img
-            src="{{ profissional.image }}"
-            alt="{{ profissional.name }}"
-            class="detail-image"
-        >
+        <div class="professional-detail-image">
+            {% if profissional.image %}
+                <img
+                    src="{{ profissional.image }}"
+                    alt="{{ profissional.name }}"
+                >
+            {% else %}
+                <div class="professional-no-image">
+                    MPBeauty
+                </div>
+            {% endif %}
+        </div>
 
-        {% endif %}
+        <div class="professional-detail-info">
 
-    </div>
+            <span class="professional-category">
+                {{ profissional.profession }}
+            </span>
 
+            <h1>{{ profissional.name }}</h1>
 
-    <div>
-
-        <h1>
-            {{ profissional.name }}
-        </h1>
-
-        <h3>
-            {{ profissional.profession }}
-        </h3>
-
-        <p>
-            {{ profissional.bio }}
-        </p>
-
-        <p>
-            {{ profissional.experience_years }}
-            anos de experiência.
-        </p>
-
-        <p>
-            {{ profissional.city }}
-            -
-            {{ profissional.neighborhood }}
-        </p>
-
-
-        <h2>
-            Serviços
-        </h2>
-
-        {% for service in profissional.services.all %}
-
-        <div class="service">
-
-            <h3>
-                {{ service.name }}
-            </h3>
+            <p>{{ profissional.bio }}</p>
 
             <p>
-                {{ service.description }}
+                <strong>Experiência:</strong>
+                {{ profissional.experience_years }} anos
             </p>
-
-            <strong>
-                R$ {{ service.price }}
-            </strong>
 
             <p>
-                {{ service.duration }}
-                minutos
+                <strong>Localização:</strong><br>
+                {{ profissional.city }} - {{ profissional.neighborhood }}
             </p>
+
+            <p>
+                <strong>Atendimento:</strong>
+                {% if profissional.home_service and profissional.studio_service %}
+                    A domicílio e no estabelecimento
+                {% elif profissional.home_service %}
+                    A domicílio
+                {% elif profissional.studio_service %}
+                    No estabelecimento
+                {% else %}
+                    Consulte a profissional
+                {% endif %}
+            </p>
+
+            <a
+                href="{% url 'agendamento' profissional.id %}"
+                class="button"
+            >
+                Agendar atendimento
+            </a>
 
         </div>
 
+    </div>
+
+</section>
+
+<section class="professional-services-section">
+
+    <div class="section-title">
+        <h2>Serviços oferecidos</h2>
+        <p>Confira os serviços disponíveis com esta profissional.</p>
+    </div>
+
+    <div class="cards">
+
+        {% for service in profissional.services.all %}
+
+            <article class="card service-card">
+
+                <div class="card-content">
+
+                    <h3>{{ service.name }}</h3>
+
+                    <p>{{ service.description }}</p>
+
+                    <strong class="product-price">
+                        R$ {{ service.price }}
+                    </strong>
+
+                    <p>
+                        <strong>Duração:</strong>
+                        {{ service.duration }} minutos
+                    </p>
+
+                </div>
+
+            </article>
+
         {% empty %}
 
-        <p>
-            Nenhum serviço cadastrado.
-        </p>
+            <p class="empty-message">
+                Nenhum serviço cadastrado no momento.
+            </p>
 
         {% endfor %}
 
+    </div>
 
-        <a
-            href="{% url 'appointment' profissional.id %}"
-            class="button"
-        >
-            Agendar atendimento
-        </a>
+</section>
+
+<section class="reviews-section">
+
+    <div class="section-title">
+        <h2>Avaliações</h2>
+        <p>Veja o que os clientes dizem sobre esta profissional.</p>
+    </div>
+
+    {% for avaliacao in avaliacoes %}
+
+        <article class="review-card">
+            <h3>{{ avaliacao.user.username }}</h3>
+            <p>Nota: {{ avaliacao.rating }}/5</p>
+            <p>{{ avaliacao.comment }}</p>
+            <small>{{ avaliacao.created_at|date:"d/m/Y" }}</small>
+        </article>
+
+    {% empty %}
+
+        <p>Esta profissional ainda não possui avaliações.</p>
+
+    {% endfor %}
+
+    <div class="form-panel">
+
+        <h2>Deixe sua avaliação</h2>
+
+        {% if user.is_authenticated %}
+
+            <form method="POST" class="beauty-form">
+                {% csrf_token %}
+                {{ formulario.as_p }}
+
+                <button type="submit" class="button">
+                    Enviar avaliação
+                </button>
+            </form>
+
+        {% else %}
+
+            <p>
+                Faça login para avaliar esta profissional.
+                <a href="{% url 'login' %}">Entrar</a>
+            </p>
+
+        {% endif %}
 
     </div>
 

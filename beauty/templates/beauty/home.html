@@ -1,194 +1,122 @@
+
 {% extends 'beauty/base.html' %}
 
 {% block title %}
-    mpbeauty | Beleza e cuidado
+    MPBeauty | Beleza e cuidado
 {% endblock %}
 
 {% block content %}
 
 <section class="hero">
-
-    <div>
-
-        <p class="small-title">
-            SUA BELEZA, DO SEU JEITO
-        </p>
+    <div class="hero-content">
+        <p class="small-title">SUA BELEZA, DO SEU JEITO</p>
 
         <h1>
             O cuidado começa
-            nos detalhes.
+            <span>nos detalhes.</span>
         </h1>
 
         <p>
-            Produtos, profissionais e
-            experiências de beleza em
-            um só lugar.
+            Produtos, profissionais e experiências de beleza
+            em um só lugar. Descubra uma nova forma de cuidar de você!
         </p>
 
-        <a
-            href="{% url 'produtos' %}"
-            class="button"
-        >
+        <a href="{% url 'produtos' %}" class="button">
             Explorar produtos
         </a>
-
     </div>
-
 </section>
 
-
 <section class="section">
-
     <div class="section-title">
+        <div>
+            <p class="small-title">NOSSA SELEÇÃO</p>
+            <h2>Produtos em destaque</h2>
+        </div>
 
-        <h2>
-            Produtos em destaque
-        </h2>
-
-        <a href="{% url 'produtos' %}">
-            Ver todos
-        </a>
-
+        <a href="{% url 'produtos' %}">Ver todos →</a>
     </div>
 
-
     <div class="cards">
-
         {% for produto in produtos %}
+            <article class="card">
+                {% if produto.image %}
+                    <img src="{{ produto.image }}" alt="{{ produto.name }}">
+                {% endif %}
 
-        <article class="card">
+                <div class="card-content">
+                    <h3>{{ produto.name }}</h3>
+                    <p>{{ produto.description }}</p>
+                    <strong>R$ {{ produto.price }}</strong>
 
-            {% if produto.image %}
-
-                <img
-                    src="{{ produto.image }}"
-                    alt="{{ produto.name }}"
-                >
-
-            {% endif %}
-
-            <h3>
-                {{ produto.name }}
-            </h3>
-
-            <p>
-                {{ produto.description }}
-            </p>
-
-            <strong>
-                R$ {{ produto.price }}
-            </strong>
-
-            <a
-                href="{% url 'produtos_detalhes' produto.id %}"
-                class="button"
-            >
-                Ver produto
-            </a>
-
-        </article>
-
+                    <a href="{% url 'produtos_detalhes' produto.id %}" class="button">
+                        Ver produto
+                    </a>
+                </div>
+            </article>
         {% empty %}
-
-            <p>
-                Nenhum produto cadastrado.
-            </p>
-
+            <p>Nenhum produto cadastrado no momento.</p>
         {% endfor %}
-
     </div>
-
 </section>
 
-
-<section class="section">
-
+<section class="section professionals-section">
     <div class="section-title">
+        <div>
+            <p class="small-title">QUEM CUIDA DE VOCÊ</p>
+            <h2>Encontre sua profissional</h2>
+        </div>
 
-        <h2>
-            Encontre sua profissional
-        </h2>
-
-        <a href="{% url 'profissionais' %}">
-            Ver profissionais
-        </a>
-
+        <a href="{% url 'profissionais' %}">Ver profissionais →</a>
     </div>
-
 
     <div class="cards">
-
         {% for profissional in profissionais %}
+            <article class="card">
+                {% if profissional.image %}
+                    <img src="{{ profissional.image }}" alt="{{ profissional.name }}">
+                {% endif %}
 
-        <article class="card">
+                <div class="card-content">
+                    <h3>{{ profissional.name }}</h3>
+                    <p>{{ profissional.profession }}</p>
+                    <p>{{ profissional.city }}</p>
 
-            {% if profissional.image %}
-
-                <img
-                    src="{{ profissional.image }}"
-                    alt="{{ profissional.name }}"
-                >
-
-            {% endif %}
-
-            <h3>
-                {{ profissional.name }}
-            </h3>
-
-            <p>
-                {{ profissional.profession }}
-            </p>
-
-            <p>
-                {{ profissional.city }}
-            </p>
-
-            <a
-                href="{% url 'professional_detail' profissional.id %}"
-                class="button"
-            >
-                Ver perfil
-            </a>
-
-        </article>
-
+                    <a href="{% url 'profissionais_detalhes' profissional.id %}" class="button">
+    Ver perfil
+</a>
+                     
+                </div>
+            </article>
+        {% empty %}
+            <p>Nenhuma profissional cadastrada no momento.</p>
         {% endfor %}
-
     </div>
-
 </section>
-
 
 <section class="section packages">
+    <div class="section-title">
+        <div>
+            <p class="small-title">MOMENTOS ESPECIAIS</p>
+            <h2>Pacotes especiais</h2>
+        </div>
 
-    <h2>
-        Pacotes especiais
-    </h2>
-
-    <div class="cards">
-
-        {% for package in packages %}
-
-        <article class="card">
-
-            <h3>
-                {{ package.name }}
-            </h3>
-
-            <p>
-                {{ package.description }}
-            </p>
-
-            <strong>
-                R$ {{ package.price }}
-            </strong>
-
-        </article>
-
-        {% endfor %}
-
+        <a href="{% url 'pacotes' %}">Ver pacotes →</a>
     </div>
 
+    <div class="cards">
+        {% for package in pacotes %}
+            <article class="card">
+                <div class="card-content">
+                    <h3>{{ package.name }}</h3>
+                    <p>{{ package.description }}</p>
+                    <strong>R$ {{ package.price }}</strong>
+                </div>
+            </article>
+        {% empty %}
+            <p>Nenhum pacote cadastrado no momento.</p>
+        {% endfor %}
+    </div>
 </section>
 
 {% endblock %}
