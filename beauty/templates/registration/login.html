@@ -1,34 +1,45 @@
-
 {% extends 'beauty/base.html' %}
 
 {% block title %}Entrar | MPBeauty{% endblock %}
 
 {% block content %}
 
-<section class="section form-section">
+<section class="auth-section">
 
-    <h1>Entrar na sua conta</h1>
+    <div class="auth-card">
 
-    <form method="post">
+        <h1>Bem-vinda de volta!</h1>
 
-        {% csrf_token %}
+        <p class="auth-description">
+            Entre na sua conta para continuar.
+        </p>
 
-        {{ form.as_p }}
+        {% if form.errors %}
+            <p class="auth-error">
+                Usuário ou senha incorretos. Tente novamente.
+            </p>
+        {% endif %}
 
-        <input type="hidden" name="next" value="{{ next }}">
+        <form method="post" class="auth-form">
 
-        <button type="submit">
-            Entrar
-        </button>
+            {% csrf_token %}
 
-    </form>
+            {{ form.as_p }}
 
-    <p>
-        Ainda não tem conta?
-        <a href="{% url 'cadastro' %}">
-            Cadastre-se
-        </a>
-    </p>
+            <input type="hidden" name="next" value="{{ next }}">
+
+            <button type="submit">
+                Entrar
+            </button>
+
+        </form>
+
+        <p class="auth-footer">
+            Ainda não tem conta?
+            <a href="{% url 'cadastro' %}">Cadastre-se</a>
+        </p>
+
+    </div>
 
 </section>
 

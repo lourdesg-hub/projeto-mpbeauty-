@@ -49,7 +49,7 @@ ROOT_URLCONF = 'mpbeuty.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'beauty' / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

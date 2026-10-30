@@ -1,32 +1,37 @@
-
 {% extends 'beauty/base.html' %}
 
-{% block title %}Cadastro | MPBeauty{% endblock %}
+{% block title %}Criar conta | MPBeauty{% endblock %}
 
 {% block content %}
 
-<section class="section form-section">
+<section class="auth-section">
 
-    <h1>Criar conta</h1>
+    <div class="auth-card">
 
-    <form method="post">
+        <h1>Criar sua conta</h1>
 
-        {% csrf_token %}
+        <p class="auth-description">
+            Faça seu cadastro para aproveitar o MPBeauty!
+        </p>
 
-        {{ formulario.as_p }}
+        <form method="post" class="auth-form">
 
-        <button type="submit">
-            Cadastrar
-        </button>
+            {% csrf_token %}
 
-    </form>
+            {{ formulario.as_p }}
 
-    <p>
-        Já possui uma conta?
-        <a href="{% url 'login' %}">
-            Entrar
-        </a>
-    </p>
+            <button type="submit">
+                Cadastrar
+            </button>
+
+        </form>
+
+        <p class="auth-footer">
+            Já possui uma conta?
+            <a href="{% url 'login' %}">Entrar</a>
+        </p>
+
+    </div>
 
 </section>
 
